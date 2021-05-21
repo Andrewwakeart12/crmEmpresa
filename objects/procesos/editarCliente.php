@@ -1,10 +1,10 @@
 <?php
 
-require './functions.php';
-require './admin/config.php';
+require '../../functions.php';
+require '../../admin/config.php';
 
-require './objects/Cliente.php';
-require './objects/DAOClient.php';
+require '../../objects/Cliente.php';
+require '../../objects/DAOClient.php';
 $conexion=conexion($bd_config);
 
 $DAOCliente= new DAOClient();
@@ -17,7 +17,7 @@ if(isset($_POST['nombre']))
     $clienteASubir= new Cliente($clientId,$nombre,$usuario,$contraseña);
     
     $DAOCliente->actualizar($clienteASubir,$conexion);
-    header("Location: index.php");
+    header("Location: ../../index.php");
     die();
 }else{
    

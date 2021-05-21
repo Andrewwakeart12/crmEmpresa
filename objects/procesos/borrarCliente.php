@@ -1,10 +1,10 @@
 <?php
 
-require './functions.php';
-require './admin/config.php';
+require_once ('../../functions.php');
+require '../../admin/config.php';
 
-require './objects/Cliente.php';
-require './objects/DAOClient.php';
+require '../../objects/Cliente.php';
+require '../../objects/DAOClient.php';
 $conexion=conexion($bd_config);
 
 $DAOCliente= new DAOClient();

@@ -1,12 +1,12 @@
 <?php 
  class Maquina{
-	private int $idCliente;
-	private int $idMaquina;
-	private int $calcomania;
-	private string $equipo;
-	private string $marca;
-	private string $modelo;
-	private string $status;
+	private  $idCliente;
+	private  $idMaquina;
+	private  $calcomania;
+	private  $equipo;
+	private  $marca;
+	private  $modelo;
+	private  $status;
 	private  $ultimoServicio;
 	private  $proximoServicio;
 
@@ -24,9 +24,56 @@
 			call_user_func_array(array($this,$funcionConstructor),$params);
 		}
 	}
-	function __construct9(int $idCliente, int $idMaquina,int $calcomania, string $equipo,string $marca, string $modelo,string $status,$ultimoServicio,$proximoServicio){
+	function __construct1( $idMaquina){
+		$this->idMaquina = $idMaquina;
+	}
+
+	function __construct2($idCliente, $idMaquina){
 		$this->idCliente = $idCliente;
 		$this->idMaquina = $idMaquina;
+	}
+	
+	function __construct3($idCliente, $idMaquina, $calcomania){
+		$this->idCliente = $idCliente;
+		$this->idMaquina = $idMaquina;
+		$this->calcomania= $calcomania;
+	}
+
+	function __construct4( $idCliente,  $idMaquina, $calcomania,  $equipo){
+		$this->idCliente = $idCliente;
+		$this->idMaquina = $idMaquina;
+		$this->calcomania= $calcomania;
+		$this->equipo = $equipo;
+	}
+
+	function __construct5( $idCliente,  $idMaquina, $calcomania,  $equipo, $marca,  $modelo){
+		$this->idCliente = $idCliente;
+		$this->idMaquina = $idMaquina;
+		$this->calcomania= $calcomania;
+		$this->equipo = $equipo;
+		$this->modelo = $modelo;
+	}
+
+	function __construct6($idCliente,$idMaquina,$calcomania,$equipo,$marca,$modelo){
+		$this->idCliente = $idCliente;
+		$this->idMaquina = $idMaquina;
+		$this->calcomania= $calcomania;
+		$this->equipo = $equipo;
+		$this->modelo = $modelo;
+		$this->marca = $marca;
+		}
+
+	function __construct7( $idCliente,  $idMaquina, $calcomania,  $equipo, $marca,  $modelo, $status){
+		$this->idCliente = $idCliente;
+		$this->idMaquina = $idMaquina;
+		$this->calcomania= $calcomania;
+		$this->equipo = $equipo;
+		$this->modelo = $modelo;
+		$this->marca = $marca;
+		$this->status = $status;
+	}
+	function __construct8( $idCliente, $calcomania, $equipo, $marca,  $modelo, $status,$ultimoServicio,$proximoServicio){
+		$this->idCliente = $idCliente;
 		$this->calcomania= $calcomania;
 		$this->equipo = $equipo;
 		$this->modelo = $modelo;
@@ -35,11 +82,13 @@
 		$this->ultimoServicio = $ultimoServicio;
 		$this->proximoServicio = $proximoServicio;
 	}
-	
-	function __construct8(int $idCliente,int $calcomania,string $equipo,string $marca, string $modelo,string $status,$ultimoServicio,$proximoServicio){
+
+	function __construct9( $idCliente,  $idMaquina, $calcomania,  $equipo, $marca,  $modelo, $status,$ultimoServicio,$proximoServicio){
 		$this->idCliente = $idCliente;
+		$this->idMaquina = $idMaquina;
 		$this->calcomania= $calcomania;
 		$this->equipo = $equipo;
+		$this->modelo = $modelo;
 		$this->marca = $marca;
 		$this->status = $status;
 		$this->ultimoServicio = $ultimoServicio;
@@ -102,6 +151,7 @@
 	function setCalcomania($calcomania){
 		$this->calcomania=$calcomania;
 	}
+	
  }
  
 ?>

@@ -1,15 +1,13 @@
 <?php  
-require '../admin/config.php';
-require 'functions.php';
+
 
  class DAOMaquina{
     var $con;
-    var $bd_config=$bd_config;
     public function DAOMaquina(){
         
     }
-    public function insertar($objetoMaquina){
-        $c = conexion($this->bd_config);
+    public function insertar($objetoMaquina,$conexion){
+        $c = $conexion;
         $id= $objetoMaquina->getClienteId();
         $calcomania= $objetoMaquina->getCalcomania();
         $equipo = $objetoMaquina->getEquipo();
@@ -18,17 +16,22 @@ require 'functions.php';
         $status = $objetoMaquina->getStatus();
         $ulitmoServicio=$objetoMaquina->getUltimoServicio();
         $proximoServicio=$objetoMaquina->getProximoServicio();
-        $sql = "INSERT into maquina values($id,NULL,$calcomania,$equipo,$marca,$modelo,$status,$ulitmoServicio,$proximoServicio)";
+        $sql = "INSERT into maquina values(?,NULL,?,?,?,?,?,?,?)";
         
-        if(!!$c->query($sql)){
-            print "Error al insertar";
-        }else{
-            print '<script languaje="Javascript"> alert("guardado");</script>';
-        }
+        $sentencia=$c->prepare($sql);
+        $sentencia->execute([$id,$equipo,$marca,$modelo,$status,$ulitmoServicio,$proximoServicio,$calcomania]);
+        $lastInsertId = $c->lastInsertId();
+            if($lastInsertId>0){
+
+            echo "hecho";
+            }
+            else{
+               
+            print_r($sentencia->errorInfo()); 
+            }
     }
     public function actualizar($objetoMaquina,$conexion){
-        $clietId= $objetoMaquina->getClienteId();
-        $maquinaId= $objetoMaquina->getMaquinaId();
+        $maquinaId= $objetoMaquina->getClienteID();
         $calcomania= $objetoMaquina->getCalcomania();
         $equipo = $objetoMaquina->getEquipo();
         $marca = $objetoMaquina->getMarca();
@@ -38,96 +41,102 @@ require 'functions.php';
         $proximoServicio=$objetoMaquina->getProximoServicio();
         $c = $conexion;
         
-        $sql = "UPDATE maquina SET `calcomania`=$calcomania `equipo`=$equipo `marca`=$marca `modelo`=$modelo,`status`=$status`ultimoServicio` `ultimoServicio`= $ulitmoServicio `ultimoServicio`=$proximoServicio WHERE `maquina`.`idMaquina` = $maquinaId";
-        if($c->query($sql)===TRUE){
-            echo "update exitoso";
-        }else{
-            echo "error al actualizar" . $c->error;
-        }
-    }
-    public function eliminar($objetoMaquina){
-        $clietId= $objetoMaquina->getClienteId();
-        $maquinaId= $objetoMaquina->getMaquinaId();
-        $calcomania= $objetoMaquina->getCalcomania();
-        $equipo = $objetoMaquina->getEquipo();
-        $marca = $objetoMaquina->getMarca();
-        $modelo = $objetoMaquina->getModelo();
-        $status = $objetoMaquina->getStatus();
-        $ulitmoServicio=$objetoMaquina->getUltimoServicio();
-        $proximoServicio=$objetoMaquina->getProximoServicio();
-        $c = conexion($this->bd_config);
+        $sql = "UPDATE maquina SET `calcomania`=? ,`equipo`=?, `marca`=? ,`modelo`=?,`status`=?,`ultimoServicio`= ?, `proximoServicio`= ? WHERE `maquina`.`idMaquina` = ?";
+        $sentencia=$c->prepare($sql);
+        $sentencia->execute([$calcomania,$equipo,$marca,$modelo,$status,$ulitmoServicio,$proximoServicio,$maquinaId]);
+        $lastInsertId = $c->lastInsertId();
         
-        $sql= "DELETE FROM `maquina` WHERE `maquina`.`idMaquina`= $maquinaId";
-        if($c->query($sql)===TRUE){
-            echo "update exitoso";
-        }else{
-            echo "error al actualizar" . $c->error;
-        }
+        if($lastInsertId>0){
+
+         echo "hecho";
+         }
+         else{
+            
+         print_r($sentencia->errorInfo()); 
+         }
+    }
+    public function eliminar($objetoMaquina,$conexion){
+        $maquinaId= $objetoMaquina->getMaquinaId();
+        $c = $conexion;
+        
+        $sql= "DELETE FROM `maquina` WHERE `maquina`.`idMaquina`= ?";
+        $sentencia=$c->prepare($sql);
+        $sentencia->execute([$maquinaId]);
+        $lastInsertId = $c->lastInsertId();
+        
+        if($lastInsertId>0){
+
+         echo "hecho";
+         }
+         else{
+            
+         print_r($sentencia->errorInfo()); 
+         }  
 }
 public function seleccionarUnaMaquina($objetoMaquina,$conexion){
     $maquinaId= $objetoMaquina->getMaquinaId();
     $c = $conexion;
     
-    $sql= "SELECT * FROM `maquina` WHERE `maquina`.`idMaquina`= $maquinaId";
+    $sql= "SELECT * FROM `maquina` WHERE `maquina`.`idMaquina`= ?";
     $sentencia=$c->prepare($sql);
-    $sentencia->execute();
-    $maquina=$sentencia->fetchAll();
+    $sentencia->execute([$maquinaId]);
+    $maquina=$sentencia->fetch();
 
-    $idCliente=$maquina.['idCliente'];
-    $idMaquina= $maquina.['idMaquina'];
-    $calcomania = $maquina.['maquina'];
-    $equipo = $maquina.['equipo'];
-    $marca = $maquina.['marca'];
-    $modelo = $maquina.['modelo'];
-    $status = $maquina.['status'];
-    $ultimoServicio = $maquina.['ultimoServicio'];
-    $proximoServicio = $maquina.['proximoServicio'];
-    $objMaquina= new Maquina($idCliente,$idMaquina,$calcomania,$equipo,$status,$ultimoServicio,$proximoServicio);
+    $idCliente=$maquina['idCliente'];
+    $idMaquina= $maquina['idMaquina'];
+    $calcomania = $maquina['calcomania'];
+    $equipo = $maquina['equipo'];
+    $marca = $maquina['marca'];
+    $modelo = $maquina['modelo'];
+    $status = $maquina['status'];
+    $ultimoServicio = $maquina['ultimoServicio'];
+    $proximoServicio = $maquina['proximoServicio'];
+    $objMaquina= new Maquina($idCliente,$idMaquina,$calcomania,$equipo,$marca,$modelo,$status,$ultimoServicio,$proximoServicio);
    return $objMaquina;
 }
-public function seleccionarTodasLasMaquinasDelCliente($objetoMaquina){
+public function seleccionarTodasLasMaquinasDelCliente($objetoMaquina,$conexion){
     $clientId= $objetoMaquina->getClienteID();
-    $sql= "SELECT * FROM `maquina` WHERE `maquina`.`idCliente`= $clientId";
-    $c = conexion($this->bd_config);
+    $sql= "SELECT * FROM `maquina` WHERE `maquina`.`idCliente`= ?";
+    $c = $conexion;
     $sentencia=$c->prepare($sql);
-    $sentencia->execute();
+    $sentencia->execute([$clientId]);
     $obj=$sentencia->fetchAll();
     $arregloMaquinas=[];        
     foreach($obj as $maquina) {
-        $idCliente=$maquina.['idCliente'];
-        $idMaquina= $maquina.['idMaquina'];
-        $calcomania = $maquina.['maquina'];
-        $equipo = $maquina.['equipo'];
-        $marca = $maquina.['marca'];
-        $modelo = $maquina.['modelo'];
-        $status = $maquina.['status'];
-        $ultimoServicio = $maquina.['ultimoServicio'];
-        $proximoServicio = $maquina.['proximoServicio'];
-        $objMaquina= new Maquina($idCliente,$idMaquina,$calcomania,$equipo,$status,$ultimoServicio,$proximoServicio);
+        $idCliente=$maquina['idCliente'];
+        $idMaquina= $maquina['idMaquina'];
+        $calcomania = $maquina['calcomania'];
+        $equipo = $maquina['equipo'];
+        $marca = $maquina['marca'];
+        $modelo = $maquina['modelo'];
+        $status = $maquina['status'];
+        $ultimoServicio = $maquina['ultimoServicio'];
+        $proximoServicio = $maquina['proximoServicio'];
+        $objMaquina= new Maquina($idCliente,$idMaquina,$calcomania,$equipo,$marca,$modelo,$status,$ultimoServicio,$proximoServicio);
         array_push($arregloMaquinas,$objMaquina);
     }
     return $arregloMaquinas;      
 }
 
-public function seleccionarMaquinasPendientesDeRevision($objetoMaquina){
+public function seleccionarMaquinasPendientesDeRevision($objetoMaquina,$conexion){
     $clientId= $objetoMaquina->getClienteId();
     $status='pendiente';
-    $sql= "SELECT * FROM `maquina` WHERE (maquina`.`idCliente`= $clientId) AND (`maquina`.`status` = pendiente)";
-    $c = conexion($this->bd_config);
+    $sql= "SELECT * FROM `maquina` WHERE (`maquina`.`idCliente`= ?) AND (`maquina`.`status` = `pendiente`)";
+    $c = $conexion;
     $sentencia=$c->prepare($sql);
-    $sentencia->execute();
+    $sentencia->execute([$clientId]);
     $obj = $sentencia->fetchAll();
     $arregloDePendientes =[];         
     foreach($obj as $maquina) {
-        $idCliente=$maquina.['idCliente'];
-        $idMaquina= $maquina.['idMaquina'];
-        $calcomania = $maquina.['maquina'];
-        $equipo = $maquina.['equipo'];
-        $marca = $maquina.['marca'];
-        $modelo = $maquina.['modelo'];
-        $status = $maquina.['status'];
-        $ultimoServicio = $maquina.['ultimoServicio'];
-        $proximoServicio = $maquina.['proximoServicio'];
+        $idCliente=$maquina['idCliente'];
+        $idMaquina= $maquina['idMaquina'];
+        $calcomania = $maquina['maquina'];
+        $equipo = $maquina['equipo'];
+        $marca = $maquina['marca'];
+        $modelo = $maquina['modelo'];
+        $status = $maquina['status'];
+        $ultimoServicio = $maquina['ultimoServicio'];
+        $proximoServicio = $maquina['proximoServicio'];
         $objMaquina= new Maquina($idCliente,$idMaquina,$calcomania,$equipo,$status,$ultimoServicio,$proximoServicio);
         array_push($arregloDePendientes,$objMaquina);
     }
