@@ -1,12 +1,13 @@
 <?php
+session_start();
  require 'config.php';
- require_once('functions.php');
- require './objects/DAOClient.php';
- require './objects/DAOMaquina.php';
- require './objects/DAOHistorial.php';
- require './objects/Historial.php';
- require './objects/Maquina.php';
- require './objects/Cliente.php';
+ require_once('../functions.php');
+ require '../objects/DAOClient.php';
+ require '../objects/DAOMaquina.php';
+ require '../objects/DAOHistorial.php';
+ require '../objects/Historial.php';
+ require '../objects/Maquina.php';
+ require '../objects/Cliente.php';
 if(isset($_SESSION['adminUsuario'])){
  $conexion=conexion($bd_config);
 
@@ -41,7 +42,7 @@ if(isset($_SESSION['adminUsuario'])){
    
 
 }else {
-    header("Location: ../../index.php");
+    header("Location: adminLogin.php");
     die();
 }
 ?>
@@ -166,6 +167,9 @@ if(isset($_SESSION['adminUsuario'])){
         <input type="text" name="titulo">
         <input type="text" name="descripcion">
         <input type="submit" value="submit">
+    </form>
+    <form action="cerrarSesion.php">
+                <input type="submit" value="cerrar sesion">
     </form>
 </body>
 </body>
