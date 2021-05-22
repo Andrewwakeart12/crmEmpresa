@@ -12,6 +12,6 @@ $titulo= $_POST['titulo'];
 $descripcion=$_POST['descripcion'];
 $nuevoHistorial = new Historial($idMaquina,$fecha,$titulo,$descripcion);
 $DAOHistorial->insertar($nuevoHistorial,$conexion);
-header("Location: ../../index.php");
-die();
+header("Location: ../../admin/index.php");
+    die();
 ?>

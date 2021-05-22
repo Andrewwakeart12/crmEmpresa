@@ -18,7 +18,7 @@ if(isset($_POST['fecha']))
     $HistorialASubir= new Historial($idMaquina,$idHistorial,$fecha,$titulo,$descripcion);
 
     $DAOHistorial->actualizar($HistorialASubir,$conexion);
-    header("Location: ../../index.php");
+    header("Location: ../../admin/index.php");
     die();
 }else{
     $idMaquina=limpiarDatos($_GET['idMaquina']);

@@ -13,7 +13,7 @@ $DAOCliente= new DAOClient();
 $nuevoCliente= new Cliente($nombre,$usuario,$contraseña);
 
 $DAOCliente->insertar($nuevoCliente,$conexion);
-header("Location: ../../index.php");
+header("Location: ../../admin/index.php");
     die();
     
 

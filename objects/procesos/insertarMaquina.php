@@ -20,8 +20,8 @@ $nuevaMaquina=new Maquina($nuevaMaquinaIdDueño,$nuevaMaquinaCalcomania,$nuevaMa
 
 $DAOMaquina= new DAOMaquina();
 $DAOMaquina->insertar($nuevaMaquina,$conexion);
-header("Location: ../../index.php");
-die();
+header("Location: ../../admin/index.php");
+    die();
 
 
 ?>

@@ -94,7 +94,25 @@ class DAOClient{
         }
         return $arregloClientes;      
     }
-            
+    public function verificarUsuarioCliente($objCliente,$conexion){
+        $c=$conexion;
+        $usuarioCliente= $objCliente->getUsuario();
+        $sql = "SELECT*FROM clientes WHERE usuario=?";
+        $sentencia=$c->prepare($sql);
+        $sentencia->execute([$usuarioCliente]);
+        $usuarioR=$sentencia->fetch();
+        echo $usuarioR['usuario'];
+        
+            if($usuarioR['usuario'] == $objCliente->getUsuario() && $usuarioR['contraseña'] == $objCliente->getContraseña()){
+                $clienteId=$usuarioR['idCliente'];
+                $usuario=$usuarioR['usuario'];
+               $contraseña=$usuarioR['contraseña']; 
+               $clienteObj= new Cliente($clienteId,$usuario,$usuario,$contraseña);
+               return $clienteObj;
+            }else{
+                return false;
+            }
+    }     
     }
 
 ?>

@@ -21,7 +21,7 @@ if(isset($_POST['calcomania']))
     $MaquinaASubir= new Maquina($MaquinaIdDueño,$MaquinaCalcomania,$MaquinaEquipo,$MaquinaMarca,$MaquinaModelo,$MaquinaStatus,$MaquinaUltimoServicio,$MaquinaProximoServicio);
     
     $DAOMaquina->actualizar($MaquinaASubir,$conexion);
-    header("Location: ../../index.php");
+    header("Location: ../../admin/index.php");
     die();
     
 }else{

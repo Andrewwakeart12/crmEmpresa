@@ -62,11 +62,11 @@ if(isset($_SESSION['adminUsuario'])){
         <li><h4>Usuario: <?php echo $cliente->getUsuario()?></h4></li>
         <li><h4>Contraseña: <?php echo $cliente->getContraseña()?></h4></li>
         <li>
-        <form action="./objects/procesos/borrarCliente.php" method="post">
+        <form action="../objects/procesos/borrarCliente.php" method="post">
             <input type="hidden" name="idCliente" value="<?php echo $cliente->getClienteId()?>">
             <input type="submit" value="delete">
         </form>
-       <form action="./objects/procesos/editarCliente.php" method="get">
+       <form action="../objects/procesos/editarCliente.php" method="get">
             <input type="hidden" name="idCliente" value="<?php echo $cliente->getClienteId()?>">
             <input type="submit" value="editar">
         </form>
@@ -85,11 +85,11 @@ if(isset($_SESSION['adminUsuario'])){
                 <li><h4>Ultimo servicio: <?php echo $maquina->getUltimoServicio()?></h4></li>
                 <li><h4>Proximo servicio: <?php echo $maquina->getProximoServicio()?></h4></li>
                 
-                <form action="./objects/procesos/borrarMaquina.php" method="post">
+                <form action="../objects/procesos/borrarMaquina.php" method="post">
                 <input type="hidden" name="maquinaId" value="<?php echo $maquina->getMaquinaID()?>">
                  <input type="submit" value="delete">
                 </form>
-                <form action="./objects/procesos/editarMaquina.php" method="get">
+                <form action="../objects/procesos/editarMaquina.php" method="get">
                 <input type="hidden" name="idMaquina" value="<?php echo $maquina->getMaquinaID()?>">
                  <input type="submit" value="editar">
                 </form>
@@ -103,11 +103,11 @@ if(isset($_SESSION['adminUsuario'])){
                             <li><h4>Titulo: <?php echo $historial->getTitulo()?></h4></li>
                             <li><h4>Descripcion: <?php echo $historial->getDescripcion()?></h4></li>
                              <li>
-                             <form action="./objects/procesos/borrarHistorial.php" method="post">
+                             <form action="../objects/procesos/borrarHistorial.php" method="post">
                              <input type="hidden" name="idHistorial" value="<?php echo $historial->getIdHistorial()?>">
                              <input type="submit" value="delete">
                              </form>
-                             <form action="./objects/procesos/editarHistorial.php">
+                             <form action="../objects/procesos/editarHistorial.php">
                                 <input type="hidden" name="idHistorial" value="<?php echo $historial->getIdHistorial()?>">
 
                                 <input type="hidden" name="idMaquina" value="<?php echo $historial->getIdMaquina()?>">
@@ -129,13 +129,13 @@ if(isset($_SESSION['adminUsuario'])){
         
     <?php }?>
     
-    <form action="./objects/procesos/insertarCliente.php" method="post">
+    <form action="../objects/procesos/insertarCliente.php" method="post">
         <input type="text" name="nombre">
         <input type="text" name="usuario">
         <input type="password" name="contraseña" id="">
         <input type="submit" value="submit">
     </form>
-    <form action="./objects/procesos/insertarMaquina.php" method="post">
+    <form action="../objects/procesos/insertarMaquina.php" method="post">
         <select name="clientesDisponibles" id="">
             <?php foreach($clientesArr as $cliente){?>
                 <option value="<?php echo $cliente->getClienteId()?>"><?php echo $cliente->getClienteId()?></option>
@@ -155,7 +155,7 @@ if(isset($_SESSION['adminUsuario'])){
         
         <input type="submit" value="submit">
     </form>
-    <form action="./objects/procesos/insertarHistorial.php" method="post">
+    <form action="../objects/procesos/insertarHistorial.php" method="post">
         <select name="maquinasDisponibles" id="">
             <?php foreach($maquinasPorCliente as $maquinaPorCLiente){?>
                 <?php foreach($maquinaPorCLiente as $maquina){?>
